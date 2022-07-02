@@ -3,19 +3,19 @@ inline namespace input {
     #ifdef LOCAL
       return getchar();
     #else
-      static const int SIZE = 1 << 20;
-      static char buf[SIZE], *b = buf;
+      static const int B = 1 << 20;
+      static char bb[B], *b = bb;
       static int cnt = 0;
 
       if (cnt == 0) {
-        if ((cnt = fread(buf, 1, SIZE, stdin)) == 0)
+        if ((cnt = fread(bb, 1, B, stdin)) == 0)
           return EOF;
-        b = buf;
+        b = bb;
       }
       return cnt--, *b++;
     #endif
   }
-  inline void rd(string& s) {
+  inline void scan(string& s) {
     char c = get_char();
 
     while (c <= ' ')
@@ -25,27 +25,27 @@ inline namespace input {
       s += c, c = get_char();
   }
   template<class T>
-  inline typename enable_if<is_floating_point<T>::value, void>::type rd(T& x) {
+  inline typename enable_if<is_floating_point<T>::value, void>::type scan(T& x) {
     string s;
 
-    rd(s);
+    scan(s);
     x = static_cast<T>(stod(s));
   }
   template<class T>
-  inline typename enable_if<is_integral<T>::value, void>::type rd(T& x) {
+  inline typename enable_if<is_integral<T>::value, void>::type scan(T& x) {
     char c = get_char();
-    bool neg = false;
+    bool f = false;
 
     x = 0;
     while (c < '0' || c > '9')
-      neg |= c == '-', c = get_char();
+      f |= c == '-', c = get_char();
     while (c >= '0' && c <= '9')
       x = (x << 3) + (x << 1) + (c ^ 48), c = get_char();
-    if (neg)
+    if (f)
       x = -x;
   }
   template<class T, class...U>
-  inline void rd(T& t, U&... u) {
-    rd(t), rd(u...);
+  inline void scan(T& t, U&... u) {
+    scan(t), scan(u...);
   }
 };
