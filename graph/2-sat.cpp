@@ -42,12 +42,11 @@ struct scc {
   }
 };
 
-struct two_sat {
+struct two_sat : scc {
   int n;
-  scc gr;
   vector<bool> status;
 
-  two_sat(int n_) : n(n_), gr(n * 2) {
+  two_sat(int n_) : scc(n_ * 2), n(n_) {
     status.resize(n);
   }
   int operator[](int i) {
@@ -56,7 +55,7 @@ struct two_sat {
   void either(int i, int j) {
     i = max(i * 2, -1 - i * 2);
     j = max(j * 2, -1 - j * 2);
-    gr.add(i ^ 1, j ^ 0), gr.add(j ^ 1, i ^ 0);
+    add(i ^ 1, j ^ 0), add(j ^ 1, i ^ 0);
   }
   void implies(int i, int j) {
     either(~i, j);
@@ -68,7 +67,7 @@ struct two_sat {
     vector<int> cc(n * 2), tmp;
     int c = 0;
 
-    gr.run([&](vector<int> &ii) {
+    scc::run([&](vector<int> &ii) {
       for (int i : ii)
         cc[i] = c;
       c++;
