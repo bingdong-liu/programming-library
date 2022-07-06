@@ -85,3 +85,28 @@ struct dinic {
     return sum;
   }
 };
+
+struct matching : dinic<int> {
+  int n, m;
+
+  matching(int n_, int m_)
+  : dinic<int>(n_ + m_ + 2), n(n_), m(m_) {
+    for (int i = 0; i < n; i++)
+      dinic<int>::add(n + m, i, 1);
+    for (int i = 0; i < m; i++)
+      dinic<int>::add(n + i, n + m + 1, 1);
+  }
+  void add(int i, int j) {
+    dinic<int>::add(i, n + j, 1);
+  }
+  vector<pair<int, int>> run() {
+    vector<pair<int, int>> matches;
+
+    dinic<int>::run(n + m, n + m + 1);
+    for (int i = 0; i < n; i++)
+      for (int h : ej[i])
+        if (ff[h] > 0)
+          matches.push_back({i, (i ^ ij[h >> 1]) - n});
+    return matches;
+  }
+};
