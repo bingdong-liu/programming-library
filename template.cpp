@@ -8,8 +8,10 @@ using namespace std;
 #endif
 
 int main() {
+#ifndef LOCAL
   ios::sync_with_stdio(false);
   cin.tie(NULL);
+#endif
   
   return 0;
 }
