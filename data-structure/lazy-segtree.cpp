@@ -1,7 +1,3 @@
-#define long long long
-
-const int N = 500000, MD = 998244353;
-
 int aa[N], st[N * 4], lz1[N * 4], lz2[N * 4];
 
 void pull(int k, int l, int r) {
@@ -11,8 +7,8 @@ void pull(int k, int l, int r) {
 }
 
 void put(int k, int l, int r, int x1, int x2) {
-  st[k] = ((long) st[k] * x1 + (long) x2 * (r - l + 1)) % MD;
-  lz1[k] = (long) lz1[k] * x1 % MD, lz2[k] = ((long) x1 * lz2[k] + x2) % MD;
+  st[k] = ((long long) st[k] * x1 + (long long) x2 * (r - l + 1)) % MD;
+  lz1[k] = (long long) lz1[k] * x1 % MD, lz2[k] = ((long long) x1 * lz2[k] + x2) % MD;
 }
 
 void push(int k, int l, int r) {
