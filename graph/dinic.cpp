@@ -18,12 +18,12 @@ struct dinic {
     ej.assign(n, {}), dd.resize(n), pp.resize(n);
     cc.clear(), ff.clear(), ij.clear();
   }
-  void add(int i, int j, const flow& c) {
+  void add(int i, int j, const flow& c, const flow& rc = 0) {
     int h = ij.size();
 
     ij.push_back(i ^ j);
     ej[i].push_back(h << 1 | 0), cc.push_back(c), ff.push_back(0);
-    ej[j].push_back(h << 1 | 1), cc.push_back(0), ff.push_back(0);
+    ej[j].push_back(h << 1 | 1), cc.push_back(rc), ff.push_back(0);
   }
   bool bfs(int s, int t) {
     queue<int> qu;
