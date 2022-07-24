@@ -17,10 +17,7 @@ struct sparse {
     }
   }
   int index(int l, int r) {
-    int b;
-
-    assert(l <= r);
-    b = 31 - __builtin_clz(r - l + 1);
+    int b = __lg(r - l + 1);
     return merge(pp[b][l], pp[b][r - (1 << b) + 1]);
   }
   T query(int l, int r) {
